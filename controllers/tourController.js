@@ -3,6 +3,19 @@ const fs = require('fs');
 // Fetching tours from JSON file.
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`));
 
+// Creating Param middleware that will check tour id, so we don't have to check it in every function
+
+exports.checkID = (req, res, next, val) => {
+  if (val >= tours.length) {
+    return res.status(404).json({
+      status: 'Failed!',
+      message: 'Invalid Id'
+    });
+  }
+
+  next();
+}
+
 exports.getAllTours = (req, res) => {
   res.status(200).json({
     status: 'success',
@@ -14,14 +27,7 @@ exports.getAllTours = (req, res) => {
 };
 
 exports.getTour = (req, res) => {
-  const id = req.params.id * 1;
-
-  if (id >= tours.length) {
-    return res.status(404).json({
-      status: 'Failed!',
-      message: 'Invalid Id'
-    });
-  }
+  const id = req.params.id * 1;  
 
   const tour = tours.find(el => el.id === id);
 
@@ -58,13 +64,6 @@ exports.createTour = (req, res) => {
 }
 
 exports.updateTour = (req, res) => {
-  if (req.params.id * 1 >= tours.length) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid Id'
-    });
-  }
-
   res.status(200).json({
     status: 'success',
     data: {
@@ -74,13 +73,6 @@ exports.updateTour = (req, res) => {
 };
 
 exports.deleteTour = (req, res) => {
-  if (req.params.id * 1 > tours.length) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid Id'
-    });
-  }
-
   res.status(204).json({
     status: 'success',
     data: null
