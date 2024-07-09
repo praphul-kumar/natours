@@ -10,16 +10,6 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 // Creating our owm Middleware
-
-// In Express Order of middleware matters because express handles middleware in a FIFS manner.
-
-app.use((req, res, next) => {
-  console.log('Hello from moddleware 👋');
-
-  next();
-});
-
-// Creating another middleware to manupulate req object
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
@@ -117,14 +107,44 @@ const deleteTour = (req, res) => {
   });
 }
 
-// Routes
-// app.get('/api/v1/tours', getAllTours);
-// app.get('/api/v1/tours/:id', getTour);
-// app.post('/api/v1/tours', createTour);
-// app.patch('/api/v1/tours/:id', updateTour);
-// app.delete('/api/v1/tours/:id', deleteTour);
+// User Route handlers
+const getAllUsers = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not yet defined!'
+  });
+}
 
-// Another way to define routes
+const getUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not yet defined!'
+  });
+}
+
+const createUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not yet defined!'
+  });
+}
+
+const updateUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not yet defined!'
+  });
+}
+
+const deleteUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not yet defined!'
+  });
+}
+
+// Routes
+
 app.route('/api/v1/tours')
   .get(getAllTours)
   .post(createTour);
@@ -133,6 +153,17 @@ app.route('/api/v1/tours/:id')
   .get(getTour)
   .patch(updateTour)
   .delete(deleteTour);
+
+// User Routes
+
+app.route('/api/v1/users')
+  .get(getAllUsers)
+  .post(createUser);
+
+app.route('/api/v1/users/:id')
+  .get(getUser)
+  .patch(updateUser)
+  .delete(deleteUser);
 
 
 // Starting Server
