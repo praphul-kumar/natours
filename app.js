@@ -7,6 +7,22 @@ const app = express();
 // Middlewares
 app.use(express.json());
 
+// Creating our owm Middleware
+
+// In Express Order of middleware matters because express handles middleware in a FIFS manner.
+
+app.use((req, res, next) => {
+  console.log('Hello from moddleware 👋');
+
+  next();
+});
+
+// Creating another middleware to manupulate req object
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+})
+
 // Fetching tours from JSON file.
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`));
 
@@ -14,8 +30,10 @@ const tours = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours-simpl
 // Creating API Endpoints
 
 const getAllTours = (req, res) => {
+  console.log(req.requestTime);
   res.status(200).json({
     status: 'success',
+    requestedAt: req.requestTime,
     results: tours.length,
     data: {
       tours
@@ -108,11 +126,6 @@ const deleteTour = (req, res) => {
 app.route('/api/v1/tours')
   .get(getAllTours)
   .post(createTour);
-
-app.use((req, res, next) => {
-  console.log('Hello from middleware!!');
-  next();
-})
 
 app.route('/api/v1/tours/:id')
   .get(getTour)
