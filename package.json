@@ -4,8 +4,8 @@
   "description": "Learning Node Express and MongoDB",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "author": "Praphul",
   "license": "ISC",
