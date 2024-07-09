@@ -1,10 +1,12 @@
 const express = require('express');
 const fs = require('fs');
+const morgan = require('morgan');
 
 // Creating an express app
 const app = express();
 
 // Middlewares
+app.use(morgan('dev'));
 app.use(express.json());
 
 // Creating our owm Middleware
@@ -27,7 +29,7 @@ app.use((req, res, next) => {
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`));
 
 
-// Creating API Endpoints
+// Route Handlers
 
 const getAllTours = (req, res) => {
   console.log(req.requestTime);
@@ -131,6 +133,9 @@ app.route('/api/v1/tours/:id')
   .get(getTour)
   .patch(updateTour)
   .delete(deleteTour);
+
+
+// Starting Server
 
 const port = 3000;
 app.listen(port, () => {
