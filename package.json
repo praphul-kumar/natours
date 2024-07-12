@@ -5,11 +5,12 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "node server.js"
+    "start": "SET NODE_ENV=production&&nodemon server.js"
   },
   "author": "Praphul",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "morgan": "^1.10.0"
   }
